@@ -13,7 +13,7 @@
                  document.getElementById("demo").innerHTML = alert(this.responseText);
                  }
              };
-              xhr.open("GET","https://account.acronis.com/account", true);
+              xhr.open("GET","https://account.acronis.com/v2/account", true);
              xhr.withCredentials = true;
              xhr.send();
              }

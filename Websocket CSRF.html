@@ -1,0 +1,65 @@
+ <!DOCTYPE html>
+  <meta charset="utf-8" />
+  <title>WebSocket Test</title>
+  <h2>WebSocket Test</h2>
+  <script language="javascript" type="text/javascript">
+
+  var wsUri = "wss://testnet.bitmex.com/realtime?heartbeat=1";
+  var output;
+
+  function init()
+  {
+    output = document.getElementById("output");
+    testWebSocket();
+  }
+
+  function testWebSocket()
+  {
+    websocket = new WebSocket(wsUri);
+    websocket.onopen = function(evt) { onOpen(evt) };
+    websocket.onclose = function(evt) { onClose(evt) };
+    websocket.onmessage = function(evt) { onMessage(evt) };
+    websocket.onerror = function(evt) { onError(evt) };
+  }
+
+  function onOpen(evt)
+  {
+    writeToScreen("CONNECTED");
+    doSend('{"op":"subscribe","args":["announcement","chat:1","connected","execution","margin","instrument","liquidation","publicNotifications","privateNotifications","order","position","orderBookL2_25:XBTUSD","trade:XBTUSD"]}');
+  }
+
+  function onClose(evt)
+  {
+    writeToScreen("DISCONNECTED");
+  }
+
+  function onMessage(evt)
+  {
+    writeToScreen('RESPONSE: ' + evt.data);
+    websocket.close();
+  }
+
+  function onError(evt)
+  {
+    writeToScreen('ERROR: ' + evt.data);
+  }
+
+  function doSend(message)
+  {
+    writeToScreen("SENT: " + message);
+    websocket.send(message);
+  }
+
+  function writeToScreen(message)
+  {
+    var pre = document.createElement("p");
+    pre.style.wordWrap = "break-word";
+    pre.innerHTML = message;
+    output.appendChild(pre);
+  }
+
+  window.addEventListener("load", init, false);
+
+  </script>
+
+  <div id="output"></div>

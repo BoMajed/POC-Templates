@@ -4,7 +4,7 @@
   <h2>WebSocket Test</h2>
   <script language="javascript" type="text/javascript">
 
-  var wsUri = "wss://testnet.bitmex.com/realtime?heartbeat=1";
+  var wsUri = "wss://target.com/";
   var output;
 
   function init()
@@ -25,7 +25,7 @@
   function onOpen(evt)
   {
     writeToScreen("CONNECTED");
-    doSend('{"op":"subscribe","args":["announcement","chat:1","connected","execution","margin","instrument","liquidation","publicNotifications","privateNotifications","order","position","orderBookL2_25:XBTUSD","trade:XBTUSD"]}');
+    doSend('{payload}');
   }
 
   function onClose(evt)
